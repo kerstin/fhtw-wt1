@@ -9,7 +9,8 @@
     * round that number up!
     * calculate no. of rows based on no. of columns
 * backside of cards should be called memoryBg.png
+* front of cards should be called card1.png through card8.png
 * clicking a card flips it over
 * when two cards are already flipped over and a 3rd card is clicked, hide the first two cards before showing the third
-* if the user guesses a pair right, the cards should be called memoryBg1.png etc. and remain visible (no further JS (inter)action possible)
+* if the user guesses a pair right, the cards should get called memoryBg1.png and not allow any further interaction
 * when the users has guessed all pairs correctly, display an alert showing the number of tries and elapsed time
