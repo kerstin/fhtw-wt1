@@ -1,4 +1,4 @@
-# Memory Game - TODOs
+## Memory Game - TODOs
 
 * ask user for name during page load
 * mention user name in headline of the page, e.g. "Welcome, [user]!"
