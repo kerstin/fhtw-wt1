@@ -6,21 +6,63 @@
         <link rel="stylesheet" type="text/css" href="memory.css">
         <script type="text/javascript" src="memory.js">
         </script>
-    </head>
-    <body>
-        <p>Let's play a game of memory!</p>
 
-        <div class="cardrow">
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
-        </div>
-        <div class="cardrow">
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
-            <div class="cardholder">Memory card #1</div>
+
+        <script type="text/javascript">
+        var username;
+        var pairs, cards;
+        var cols, rows;
+        var startDate = new Date();
+        var stopDate;
+        var tries;
+        var rasterinner = "";
+        var i, j, k=0;
+
+        function whoAreYou() {
+            var username = prompt("So you want to play a game of memory?"
+            +" Please tell me your name first!");
+            document.getElementById("welcome").innerHTML =
+            "Hey <span class=\"username\">" + username+ "</span>,";
+        }
+
+        function drawRaster() {
+            pairs = document.forms["pickpairs"]["number"].value
+            cards = pairs*2;
+            cols = Math.ceil(Math.sqrt(cards));
+            // alert(cols);
+            rows = Math.ceil(cards/cols);
+            // alert(rows);
+
+            rasterinner += "<div>You have chosen to play with " +pairs+
+            " pairs of cards:</div>\n<div>&nbsp;</div>";
+            for(i=0;i<rows;i++) {
+                rasterinner += "<div class=\"cardrow\">\n";
+                for(j=0;j<cols;j++) {
+                    if(k<cards) {
+                    rasterinner += "\t<div class=\"cardholder\">card" +j+
+                    "</div>\n";
+                    k++;
+                    }
+                }
+                rasterinner += "</div>";
+            }
+            document.getElementById("cardraster").innerHTML = rasterinner;
+        }
+        </script>
+
+    </head>
+    <body onload="whoAreYou();">
+        <h2><span id="welcome">Hey there,</span> let's play a game of memory!
+        </h2>
+
+        <div id="cardraster">
+            <form name="pickpairs" action="#" method="get">
+            <p>With how many pairs would you like to play?<br>
+            (2-8 possible)</p>
+            <input type="text" name="number" value="" size="3"><br>
+            <input type="submit" name="submit" value="Go!"
+            onClick="return drawRaster()">
+            </form>
         </div>
     </body>
 </html>
