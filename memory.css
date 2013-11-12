@@ -5,8 +5,12 @@ body {
     background-color: #FFFFFF;
 }
 
-.mainframe {
+/*.mainframe {
     color: #222255;
+}
+*/
+.username {
+    color: #9999CC;
 }
 
 .cardrow {
