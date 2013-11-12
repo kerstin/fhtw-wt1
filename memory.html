@@ -7,46 +7,71 @@
         <script type="text/javascript" src="memory.js">
         </script>
 
-
         <script type="text/javascript">
         var username;
-        var pairs, cards;
+        var pairs, cards, cardCount;
         var cols, rows;
         var startDate = new Date();
         var stopDate;
         var tries;
-        var rasterinner = "";
-        var i, j, k=0;
+        var rasterInner = "";
+        var i, j, c, p, r, k=0, temp;
 
         function whoAreYou() {
-            var username = prompt("So you want to play a game of memory?"
-            +" Please tell me your name first!");
-            document.getElementById("welcome").innerHTML =
-            "Hey <span class=\"username\">" + username+ "</span>,";
+            // var username = prompt("So you want to play a game of memory?"
+            // +" Please tell me your name first!");
+            // document.getElementById("welcome").innerHTML =
+            // "Hey <span class=\"username\">" + username+ "</span>,";
+        }
+
+        // shuffle array with Fisher-Yates Shuffle
+        function randomise(array) {
+            var c = array.length;
+
+            while (c) {
+                // pick a random no. based on array length
+                i = Math.floor(Math.random() * c--);
+                // swap element with that key with current element
+                temp = array[c];
+                array[c] = array[i];
+                array[i] = temp;
+            }
+            return array;
         }
 
         function drawRaster() {
-            pairs = document.forms["pickpairs"]["number"].value
-            cards = pairs*2;
-            cols = Math.ceil(Math.sqrt(cards));
-            // alert(cols);
-            rows = Math.ceil(cards/cols);
-            // alert(rows);
+            pairs = document.forms["pickpairs"]["number"].value;
+            cardCount = pairs*2;
+            cols = Math.ceil(Math.sqrt(cardCount));
+            // don't allow uneven columns
+            if(cols%2 != 0) {
+                cols += 1;
+            }
+            rows = Math.ceil(cardCount/cols);
 
-            rasterinner += "<div>You have chosen to play with " +pairs+
+            cards = [];
+             // create array with all cards
+            for(i=0;i<pairs;i++) {
+                    cards.push(i+1);
+                    cards.push(i+1);
+            }
+            alert(randomise(cards));
+
+            // print raster with cards
+            rasterInner += "<div>You have chosen to play with " +pairs+
             " pairs of cards:</div>\n<div>&nbsp;</div>";
             for(i=0;i<rows;i++) {
-                rasterinner += "<div class=\"cardrow\">\n";
+                rasterInner += "<div class=\"cardrow\">\n";
                 for(j=0;j<cols;j++) {
-                    if(k<cards) {
-                    rasterinner += "\t<div class=\"cardholder\">card" +j+
+                    if(k<cardCount) {
+                    rasterInner += "\t<div class=\"cardholder\">card" +cards[k]+
                     "</div>\n";
                     k++;
                     }
                 }
-                rasterinner += "</div>";
+                rasterInner += "</div>";
             }
-            document.getElementById("cardraster").innerHTML = rasterinner;
+            document.getElementById("cardraster").innerHTML = rasterInner;
         }
         </script>
 
