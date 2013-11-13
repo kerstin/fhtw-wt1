@@ -11,10 +11,13 @@
         var username;
         var pairs, cards, cardCount;
         var cols, rows;
-        var startDate = new Date();
+        var startDate = "";
         var stopDate;
-        var tries;
+        var tries = 0;
         var rasterInner = "";
+        var memoryBg = "<img class=\"dim\" src=\"img/memoryBg.jpg\">";
+        var memoryBgl = "<img src=\"img/memoryBg.jpg\">";
+        var singleCard;
         var i, j, c, p, r, k=0, temp;
 
         function whoAreYou() {
@@ -22,6 +25,10 @@
             // +" Please tell me your name first!");
             // document.getElementById("welcome").innerHTML =
             // "Hey <span class=\"username\">" + username+ "</span>,";
+        }
+
+        function pickCards (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         // shuffle array with Fisher-Yates Shuffle
@@ -39,33 +46,91 @@
             return array;
         }
 
+        function flip(element) {
+
+            tries += 1;
+
+            if (startDate == "") {
+                startDate = new Date();
+            } else {
+                var currentDate = new Date();
+                var dateDiff = currentDate.getTime() - startDate.getTime();
+                var dateDiffSeconds = Math.round(dateDiff / 1000);
+                var min, sec;
+                var minWord = "minute";
+                var secWord = "second";
+                var plural = "s";
+                var timeoutput;
+
+                if (dateDiffSeconds >= 60) {
+                    min  = Math.floor(dateDiffSeconds / 60);
+                    sec = (dateDiffSeconds / 60) - min;
+
+                    if (min > 1) {
+                        minWord = minWord.concat(plural);
+                    }
+                    if (sec > 1) {
+                        minWord = minWord.concat(plural);
+                    }
+                    timeoutput = min+ " " +minWord+ ", " +sec+ " " +secWord;
+                } else {
+                    sec = Math.round(dateDiffSeconds);
+                    if (sec > 1) {
+                        secWord = secWord.concat(plural);
+                    }
+                    timeoutput = sec+ " " +secWord;
+                }
+                alert("It took you ~" +timeoutput+ " and " +tries+ " tries to solve the game!");
+            }
+
+
+            var i = element;
+
+            var classList = document.getElementById('card' +i).className.split(/\s+/);
+            for (var i = 0; i < classList.length; i++) {
+               if (classList[i] === 'someClass') {
+                 //do something
+               }
+            }
+
+
+            // if (document.getElementById("cardraster").innerHTML = rasterInner;) {
+
+            // }
+        }
+
         function drawRaster() {
             pairs = document.forms["pickpairs"]["number"].value;
             cardCount = pairs*2;
             cols = Math.ceil(Math.sqrt(cardCount));
             // don't allow uneven columns
-            if(cols%2 != 0) {
-                cols += 1;
-            }
+            // if(cols%2 != 0) {
+            //     cols += 1;
+            // }
             rows = Math.ceil(cardCount/cols);
 
             cards = [];
              // create array with all cards
-            for(i=0;i<pairs;i++) {
-                    cards.push(i+1);
-                    cards.push(i+1);
+            for(i=1;i<=pairs;i++) {
+                    // j = pickCards(1,12);
+                    // if () {
+                    //     i--;
+                    // }
+                    cards.push(i);
+                    cards.push(i);
             }
-            alert(randomise(cards));
+            randomise(cards);
 
+            singleCard = "<img class=\"card\" src=\"img/card" +cards[k]+ ".gif\">";
+            "<>"
             // print raster with cards
             rasterInner += "<div>You have chosen to play with " +pairs+
-            " pairs of cards:</div>\n<div>&nbsp;</div>";
+            " pairs of cards:</div><div>&nbsp;</div>";
             for(i=0;i<rows;i++) {
-                rasterInner += "<div class=\"cardrow\">\n";
+                rasterInner += "<div class=\"cardrow\">";
                 for(j=0;j<cols;j++) {
                     if(k<cardCount) {
-                    rasterInner += "\t<div class=\"cardholder\">card" +cards[k]+
-                    "</div>\n";
+                    rasterInner += "<div class=\"cardholder\"><div id=\"card" +(k+1)+ "\" class=\"card\" style=\"background-image: url('img/card" +cards[k]+ ".gif');\" onClick=\"flip(" +(k)+ ");\">" +(k+1)+ "</div></div>";
                     k++;
                     }
                 }
@@ -73,6 +138,13 @@
             }
             document.getElementById("cardraster").innerHTML = rasterInner;
         }
+
+        function elapsedTime() {
+            stopDate = new Date();
+
+        }
+
+
         </script>
 
     </head>
@@ -81,7 +153,7 @@
         </h2>
 
         <div id="cardraster">
-            <form name="pickpairs" action="#" method="get">
+            <form name="pickpairs" action="" method="get">
             <p>With how many pairs would you like to play?<br>
             (2-8 possible)</p>
             <input type="text" name="number" value="" size="3"><br>
