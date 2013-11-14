@@ -25,12 +25,25 @@ body {
 }
 
 .card {
-    padding: 10px;
     width: 100px;
     height: 100px;
     background-repeat: no-repeat;
+    z-index: 0;
 }
 
-.dim {
-    opacity: .5;
+.back, .done {
+    left: 0px;
+    top: 0px;
+    width: 100px;
+    height: 100px;
+}
+
+.back {
+    opacity: 1;
+    visibility: visible;
+}
+
+.done {
+    background-image: url("img/memoryBg1.jpg");
+    opacity: 1;
 }
